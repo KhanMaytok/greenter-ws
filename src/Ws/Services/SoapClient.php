@@ -26,6 +26,17 @@ class SoapClient extends \SoapClient implements WsClientInterface
      */
     public function __construct($wsdl = '', $parameters = [])
     {
+        $parameters=[
+			'stream_context' => stream_context_create([
+				'ssl' => [
+					// 'ciphers'=>'AES256-SHA',
+					'verify_peer' => false,
+					// 'verify_peer_name' => false,
+					// 'allow_self_signed' => true
+				],
+			]),
+		];
+        
         if (empty($wsdl)) {
             $wsdl = WsdlProvider::getBillPath();
         }
